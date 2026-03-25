@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bornanew — להתחיל מחדש</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white:      #FAFAF7;
+    --offwhite:   #F2F0EB;
+    --sage-light: #E8EDE0;
+    --sage:       #7A9068;
+    --sage-dark:  #4A5C3A;
+    --teal:       #3AACB8;
+    --teal-dark:  #1E6B75;
+    --gold:       #C8A227;
+    --gold-light: #E8D080;
+    --stone:      #9B9488;
+    --ink:        #1C2018;
+    --ink-soft:   #3A3D32;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Assistant', sans-serif;
+    font-weight: 300;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+    font-size: 17px;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-direction: row-reverse;
+    padding: 1.2rem 4rem;
+    background: rgba(250,250,247,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(122,144,104,0.12);
+    transition: padding 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.8rem;
+    text-decoration: none;
+  }
+
+  .nav-logo-img { height: 52px; width: auto; }
+
+  .nav-brand-text {
+    display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15;
+  }
+
+  .nav-brand-he {
+    font-family: 'Assistant', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    color: var(--ink); letter-spacing: 0.02em;
+  }
+
+  .nav-brand-en {
+    font-family: 'Assistant', sans-serif;
+    font-size: 0.85rem; font-style: italic; font-weight: 400;
+    color: var(--teal); letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.8rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.88rem; font-weight: 400;
+    color: var(--ink-soft); text-decoration: none;
+    letter-spacing: 0.04em;
+    position: relative; transition: color 0.3s;
+  }
+
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -4px; right: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-size: 0.8rem; font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    background: var(--teal-dark);
+    padding: 0.65rem 1.6rem;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .nav-cta:hover { background: var(--sage-dark); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    height: 100vh; min-height: 640px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #b8d4c8 0%, #3AACB8 40%, #1E6B75 100%);
+  }
+
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; inset: 0;
+    transition: transform 8s ease;
+  }
+
+  .hero:hover .hero-bg img { transform: scale(1.04); }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(28, 32, 24, 0.72) 0%,
+      rgba(28, 32, 24, 0.2) 50%,
+      transparent 100%
+    );
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: end;
+    padding: 0 4rem 5rem;
+    gap: 2rem;
+  }
+
+  .hero-left { }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(5rem, 11vw, 11rem);
+    font-weight: 200; line-height: 0.9;
+    color: var(--white);
+    opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--gold-light);
+    display: block;
+  }
+
+  .hero-right {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: 2rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .hero-text {
+    font-size: 1.15rem; line-height: 1.85;
+    color: rgba(250,250,247,0.85);
+    max-width: 360px;
+    opacity: 0; animation: fadeUp 0.9s ease 0.7s forwards;
+  }
+
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: transparent;
+    border: 1px solid rgba(200,162,39,0.6);
+    color: var(--gold-light);
+    padding: 0.9rem 2rem;
+    font-family: 'Assistant', sans-serif;
+    font-size: 0.82rem; letter-spacing: 0.15em;
+    text-decoration: none; text-transform: uppercase;
+    transition: all 0.3s ease;
+    opacity: 0; animation: fadeUp 0.9s ease 0.9s forwards;
+  }
+
+  .hero-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+    gap: 1.4rem;
+  }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    z-index: 3;
+    opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
+  }
+
+  .hero-scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--gold-light), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  .hero-scroll span {
+    font-size: 0.6rem; letter-spacing: 0.25em;
+    color: rgba(232,208,128,0.6);
+    text-transform: uppercase;
+    writing-mode: vertical-rl; rotate: 180deg;
+  }
+
+  /* ─── MANIFESTO STRIP ─── */
+  .manifesto {
+    background: var(--sage-dark);
+    padding: 2.5rem 4rem;
+    display: flex; align-items: center; gap: 3rem;
+    overflow: hidden;
+  }
+
+  .manifesto-line {
+    width: 60px; height: 1px;
+    background: var(--gold); flex-shrink: 0;
+  }
+
+  .manifesto-text {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-style: italic; font-weight: 300;
+    color: var(--offwhite);
+    letter-spacing: 0.03em; line-height: 1.5;
+  }
+
+  .manifesto-text em { color: var(--gold-light); font-style: normal; }
+
+  /* ─── ABOUT ─── */
+  .about {
+    display: grid; grid-template-columns: 5fr 7fr;
+    min-height: 85vh;
+  }
+
+  .about-img-col {
+    position: relative; overflow: hidden;
+  }
+
+  .about-img-col img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+
+  .about-img-col:hover img { transform: scale(1.04); }
+
+  .about-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to left, rgba(28,32,24,0.15), transparent);
+  }
+
+  .about-text-col {
+    background: var(--offwhite);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 6rem 7rem 5rem;
+    position: relative;
+  }
+
+  .about-text-col::before {
+    content: '✦';
+    position: absolute; top: 4rem; left: 5rem;
+    font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em;
+  }
+
+  .section-eyebrow {
+    font-size: 0.68rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1.4rem; display: block;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--ink); margin-bottom: 0.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--sage); }
+
+  .title-rule {
+    width: 56px; height: 2px; margin: 1.8rem 0;
+    background: linear-gradient(to left, var(--gold), var(--teal));
+    border-radius: 2px;
+  }
+
+  .about-body {
+    font-size: 1.02rem; line-height: 2;
+    color: var(--ink-soft); margin-bottom: 1.8rem;
+  }
+
+  .about-body + .about-body {
+    padding-top: 1.8rem;
+    border-top: 1px solid rgba(122,144,104,0.2);
+  }
+
+  .about-stats {
+    display: flex; gap: 3rem;
+    margin-top: 3rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(122,144,104,0.2);
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .stat-number {
+    font-family: 'Assistant', sans-serif;
+    font-size: 2.8rem; font-weight: 300; line-height: 1;
+    color: var(--teal);
+  }
+
+  .stat-label {
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--stone);
+  }
+
+  /* ─── SPACES ─── */
+  .spaces { background: var(--white); padding: 8rem 4rem; }
+
+  .spaces-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 5rem;
+  }
+
+  .spaces-link {
+    font-size: 0.8rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--stone);
+    text-decoration: none; display: flex; align-items: center; gap: 0.6rem;
+    transition: color 0.3s, gap 0.3s;
+    border-bottom: 1px solid rgba(155,148,136,0.3);
+    padding-bottom: 2px;
+  }
+
+  .spaces-link:hover { color: var(--teal); gap: 1rem; }
+
+  .spaces-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+  }
+
+  .space-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    background: var(--white);
+  }
+
+  .space-card-img {
+    width: 100%; aspect-ratio: 4/3; overflow: hidden; display: block;
+    position: relative;
+  }
+
+  .space-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+  }
+
+  .space-card:hover .space-card-img img { transform: scale(1.06); }
+
+  .space-card-body {
+    padding: 2rem 2.5rem 2.5rem;
+    background: var(--white);
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .space-card:hover .space-card-body { border-color: var(--teal); }
+
+  .space-number {
+    font-size: 0.72rem; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 0.6rem;
+    display: block; font-weight: 400;
+  }
+
+  .space-name {
+    font-size: 1.8rem; font-weight: 300;
+    color: var(--ink); margin-bottom: 0.8rem; line-height: 1.1;
+  }
+
+  .space-desc {
+    font-size: 0.95rem; color: var(--stone);
+    line-height: 1.8;
+  }
+
+  /* ─── WORKSHOPS ─── */
+  .workshops {
+    padding: 8rem 4rem;
+    background: #F4F7EF;
+    position: relative; overflow: hidden;
+  }
+
+  .workshops::before { display: none; }
+
+  /* עלים מונפשים */
+  .leaf {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: leafFloat linear infinite;
+  }
+
+  @keyframes leafFloat {
+    0%   { transform: translateY(0px) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.09; }
+    90%  { opacity: 0.07; }
+    100% { transform: translateY(-120px) rotate(25deg); opacity: 0; }
+  }
+
+  .workshops > *:not(.leaf) { position: relative; z-index: 1; }
+
+  .workshops-header { text-align: center; margin-bottom: 5rem; }
+  .workshops-header .section-eyebrow { color: var(--teal); }
+  .workshops-header .section-title { color: var(--ink); }
+  .workshops-sub {
+    font-size: 1rem; color: var(--stone);
+    margin-top: 0.8rem; letter-spacing: 0.03em; line-height: 1.7;
+  }
+
+  .workshops-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .workshop-card {
+    position: relative; overflow: hidden;
+    background: var(--white);
+    border: 1px solid rgba(122,144,104,0.15);
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    border-top: 3px solid transparent;
+  }
+
+  .workshop-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(74,92,58,0.12);
+    border-top-color: var(--teal);
+  }
+
+  .workshop-img {
+    position: relative; height: 220px; overflow: hidden;
+  }
+
+  .workshop-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.88) saturate(0.9);
+    transition: transform 0.7s ease, filter 0.5s ease;
+  }
+
+  .workshop-card:hover .workshop-img img {
+    transform: scale(1.07); filter: brightness(0.82) saturate(1.1);
+  }
+
+  .workshop-num {
+    position: absolute; top: 1rem; right: 1.2rem;
+    font-size: 3.5rem; font-weight: 200;
+    color: rgba(255,255,255,0.25);
+    line-height: 1; font-style: italic;
+  }
+
+  .workshop-body { padding: 1.8rem 1.8rem 2.2rem; }
+
+  .workshop-tag {
+    font-size: 0.65rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 0.7rem; display: block; font-weight: 400;
+  }
+
+  .workshop-name {
+    font-size: 1.4rem; font-weight: 400;
+    color: var(--ink); margin-bottom: 0.8rem; line-height: 1.25;
+  }
+
+  .workshop-desc {
+    font-size: 0.9rem; color: var(--stone);
+    line-height: 1.8; margin-bottom: 1.5rem;
+  }
+
+  .workshop-link {
+    font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--sage);
+    text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+    transition: gap 0.3s, color 0.3s; font-weight: 400;
+  }
+
+  .workshop-link:hover { gap: 0.9rem; color: var(--teal); }
+
+  /* ─── GUIDES ─── */
+  .guides { padding: 8rem 4rem; background: var(--sage-light); }
+
+  .guides-header { text-align: center; margin-bottom: 5rem; }
+
+  .guides-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem;
+  }
+
+  .guide-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--white);
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .guide-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(58,172,184,0.12);
+  }
+
+  .guide-avatar {
+    width: 110px; height: 110px;
+    border-radius: 50%; margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, var(--sage-light), var(--sage));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Assistant', sans-serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--white);
+    position: relative;
+  }
+
+  .guide-avatar::before {
+    content: ''; position: absolute;
+    inset: -3px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--gold));
+    z-index: -1;
+  }
+
+  .guide-card:nth-child(2) .guide-avatar { background: linear-gradient(135deg, #9DC4C8, var(--teal)); }
+  .guide-card:nth-child(3) .guide-avatar { background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  .guide-card:nth-child(4) .guide-avatar { background: linear-gradient(135deg, var(--sage), var(--sage-dark)); }
+
+  .guide-name {
+    font-family: 'Assistant', sans-serif;
+    font-size: 1.4rem; font-weight: 400;
+    color: var(--ink); margin-bottom: 0.3rem;
+  }
+
+  .guide-role {
+    font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--teal);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 70vh;
+  }
+
+  .contact-img {
+    position: relative; overflow: hidden;
+    background: var(--ink);
+  }
+
+  .contact-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.7; display: block;
+  }
+
+  .contact-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(30,107,117,0.5), rgba(28,32,24,0.4));
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 4rem;
+  }
+
+  .contact-quote {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-style: italic; font-weight: 300;
+    color: var(--white); line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+
+  .contact-quote-author {
+    font-size: 0.78rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold-light);
+  }
+
+  .contact-form-col {
+    background: var(--offwhite);
+    padding: 6rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .form-title {
+    font-family: 'Assistant', sans-serif;
+    font-size: 2.8rem; font-weight: 300;
+    color: var(--ink); margin-bottom: 0.5rem; line-height: 1.1;
+  }
+
+  .form-title em { font-style: italic; color: var(--teal); }
+
+  .form-subtitle {
+    font-size: 0.95rem; color: var(--stone);
+    margin-bottom: 2.5rem; line-height: 1.7;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+
+  .form-label {
+    font-size: 0.68rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--stone);
+  }
+
+  .form-input, .form-textarea {
+    background: var(--white);
+    border: none;
+    border-bottom: 1px solid rgba(155,148,136,0.4);
+    padding: 0.75rem 0;
+    font-family: 'Assistant', sans-serif;
+    font-size: 0.95rem; color: var(--ink);
+    outline: none; direction: rtl;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--teal);
+    background: transparent;
+  }
+
+  .form-textarea { min-height: 100px; resize: none; padding-top: 0.75rem; }
+
+  .form-submit {
+    margin-top: 1rem;
+    background: var(--teal-dark);
+    color: var(--white); border: none;
+    padding: 1.1rem 3rem;
+    font-family: 'Assistant', sans-serif;
+    font-size: 0.82rem; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    align-self: flex-start;
+  }
+
+  .form-submit:hover { background: var(--sage-dark); transform: translateY(-2px); }
+
+  /* ─── CONTACT INFO STRIP ─── */
+  .contact-strip {
+    background: var(--ink);
+    padding: 2rem 4rem;
+    display: flex; align-items: center; justify-content: center; gap: 5rem;
+  }
+
+  .contact-strip-item {
+    display: flex; align-items: center; gap: 1rem;
+    color: rgba(242,240,235,0.7); font-size: 0.9rem;
+  }
+
+  .contact-strip-item span:first-child { color: var(--gold); font-size: 1rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink-soft);
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(122,144,104,0.2);
+  }
+
+  .footer-brand {
+    display: flex; flex-direction: column; gap: 0.3rem;
+  }
+
+  .footer-brand-he {
+    font-family: 'Assistant', sans-serif;
+    font-size: 1rem; font-weight: 400; color: var(--offwhite);
+  }
+
+  .footer-brand-en {
+    font-family: 'Assistant', sans-serif;
+    font-style: italic; font-size: 0.85rem;
+    color: var(--stone);
+  }
+
+  .footer-copy { font-size: 0.75rem; color: var(--stone); letter-spacing: 0.06em; }
+
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a {
+    font-size: 0.75rem; color: var(--stone); text-decoration: none;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50%       { opacity: 0.9; transform: scaleY(1.12); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+  .reveal-delay-3 { transition-delay: 0.36s; }
+  .reveal-delay-4 { transition-delay: 0.48s; }
+
+  /* ─── TABLET ─── */
+  @media (max-width: 1100px) {
+    nav { padding: 1rem 2.5rem; }
+    .hero-content { padding: 0 2.5rem 4rem; }
+    .about { grid-template-columns: 1fr; }
+    .about-text-col { padding: 5rem 3rem; }
+    .spaces { padding: 6rem 2.5rem; }
+    .workshops { padding: 6rem 2.5rem; }
+    .workshops-grid { grid-template-columns: repeat(2, 1fr); }
+    .guides { padding: 6rem 2.5rem; }
+    .guides-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .contact { grid-template-columns: 1fr; }
+    .contact-img { min-height: 380px; }
+    .contact-form-col { padding: 4rem 3rem; }
+    footer { padding: 2.5rem 2.5rem; }
+    .contact-strip { padding: 2rem 2.5rem; gap: 2.5rem; flex-wrap: wrap; }
+    .manifesto { padding: 2rem 2.5rem; }
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    body { font-size: 16px; }
+
+    nav {
+      padding: 0.9rem 1.5rem;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .nav-links {
+      order: 3; width: 100%;
+      gap: 0.8rem; flex-wrap: wrap; justify-content: center;
+      padding: 0.5rem 0 0.2rem;
+      border-top: 1px solid rgba(122,144,104,0.15);
+    }
+
+    .nav-links a { font-size: 0.82rem; }
+    .nav-logo-img { height: 40px; }
+
+    .hero { height: 88vh; min-height: 520px; }
+
+    .hero-content {
+      grid-template-columns: 1fr; padding: 0 1.5rem 3.5rem;
+      gap: 1.5rem;
+    }
+
+    .hero-right { align-items: flex-start; }
+    .hero-text { max-width: 100%; font-size: 0.95rem; }
+    .hero-title { font-size: clamp(3.2rem, 13vw, 5rem); }
+
+    .manifesto { flex-direction: column; gap: 1.2rem; padding: 2rem 1.5rem; }
+    .manifesto-line { width: 40px; }
+
+    .about-img-col { min-height: 320px; }
+    .about-text-col { padding: 3.5rem 1.5rem; }
+    .about-stats { gap: 2rem; flex-wrap: wrap; }
+
+    .spaces { padding: 5rem 1.5rem; }
+    .spaces-grid { grid-template-columns: 1fr; }
+    .spaces-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    .workshops { padding: 5rem 1.5rem; }
+    .workshops-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .workshop-card { border-top: 3px solid transparent; border-left: none; }
+
+    .guides { padding: 5rem 1.5rem; }
+    .guides-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .guide-card { padding: 2rem 1rem; }
+    .guide-avatar { width: 90px; height: 90px; font-size: 1.8rem; }
+
+    .contact-form-col { padding: 3.5rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-strip { gap: 1.5rem; }
+
+    footer { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; text-align: center; }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-cta" href="#contact">צור קשר</a>
+  <ul class="nav-links">
+    <li><a href="#about">הסיפור שלנו</a></li>
+    <li><a href="#spaces">המרחבים</a></li>
+    <li><a href="#workshops">סדנאות</a></li>
+    <li><a href="#guides">המנחים</a></li>
+  </ul>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo-img" style="width:52px;height:52px;background:linear-gradient(135deg,#3AACB8,#5A8A2E);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;">🌱</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-he">להתחיל מחדש</span>
+      <span class="nav-brand-en">Bornanew</span>
+    </div>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="galilee-hero-new.jpg" alt="נוף הרי הגליל">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <span class="hero-tag">גליל עליון · ריפוי בטבע</span>
+      <h1 class="hero-title">
+        להתחיל
+        <em>מחדש</em>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-text">מרחבי ריפוי והתחדשות ברחבי הגליל העליון. מקום שנוצר כדי שתוכלו להאט, לנשום, ולחזור אל עצמכם.</p>
+      <a href="#about" class="hero-btn">
+        גלו את הסיפור שלנו
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>גלול</span>
+  </div>
+</section>
+
+<!-- MANIFESTO STRIP -->
+<div class="manifesto">
+  <div class="manifesto-line"></div>
+  <p class="manifesto-text">
+    כולנו עברנו תקופה מאתגרת — עכשיו זו ההזדמנות ללמוד לצעוד <em>בקצב חדש</em>
+  </p>
+  <div class="manifesto-line"></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="about-img-col">
+    <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=85&fit=crop" alt="יער גליל">
+    <div class="about-img-overlay"></div>
+  </div>
+  <div class="about-text-col reveal">
+    <span class="section-eyebrow">הסיפור שלנו</span>
+    <h2 class="section-title">מקום שבו<br><em>הריפוי מתחיל</em></h2>
+    <div class="title-rule"></div>
+    <p class="about-body">מרחבי ריפוי והתחדשות ברחבי הגליל העליון אשר הוקם דווקא בעת המלחמה ובצפון הקסום. באמצעות מנחים ומנחות מקצועיים המתמחים בגוף ובנפש בצורות מגוונות בנינו מרכז המאפשר התבוננות פנימית מנותקת מהשגרה כדי לאפשר הנעה של תהליך פנימי.</p>
+    <p class="about-body">מומחי המרכז משתמשים בכלים מגוונים להבנה ותחזוקת הנפש. כלל האתרים מתאימים להתבוננות פנימית עמוקה, אנרגיות מרגיעות ואוויר נקי שמאפשר להאט, לנשום ולחזור אל עצמינו חזקים יותר.</p>
+    <div class="about-stats">
+      <div class="stat">
+        <span class="stat-number">2</span>
+        <span class="stat-label">מתחמים</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">7</span>
+        <span class="stat-label">דונם טבע</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">4</span>
+        <span class="stat-label">סדנאות</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPACES -->
+<section id="spaces" class="spaces">
+  <div class="spaces-header reveal">
+    <div>
+      <span class="section-eyebrow">Nature as Medicine</span>
+      <h2 class="section-title">המרחבים <em>שלנו</em></h2>
+    </div>
+  </div>
+  <div class="spaces-grid">
+    <div class="space-card reveal reveal-delay-1">
+      <div class="space-card-img">
+        <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=900&q=80&fit=crop" alt="מתחם רמות נפתלי">
+      </div>
+      <div class="space-card-body">
+        <span class="space-number">01</span>
+        <h3 class="space-name">מתחם רמות נפתלי</h3>
+        <p class="space-desc">3.5 דונם של עצים ותיקים וסלעים טבעיים עם נישות ייחודיות לתהליכים פנימיים. חמש בקתות עץ זוגיות או משפחתיות, נעימות ומאובזרות — אנרגיות, שלווה, שקט ופרטיות שמרפאים את הנשמה.</p>
+      </div>
+    </div>
+    <div class="space-card reveal reveal-delay-2">
+      <div class="space-card-img">
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=80&fit=crop&crop=right" alt="מתחם עמק החולה">
+      </div>
+      <div class="space-card-body">
+        <span class="space-number">02</span>
+        <h3 class="space-name">מתחם עמק החולה</h3>
+        <p class="space-desc">3.5 דונם של חורשת אקליפטוס ותיקה, צמודה לנחל, עשירה בנוף עוצר נשימה. לינה בטבע, סככת אוכל, מטבחון — שקט וטבע המאפשר צמיחה מחודשת.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section id="workshops" class="workshops">
+
+  <!-- עלים מונפשים ברקע -->
+  <svg class="leaf" style="width:90px;bottom:15%;left:6%;animation-duration:9s;animation-delay:0s;" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 5 C40 5 70 30 70 65 C70 95 55 115 40 115 C25 115 10 95 10 65 C10 30 40 5 40 5Z" fill="#4A5C3A"/>
+    <path d="M40 5 L40 115" stroke="#7A9068" stroke-width="1.5" opacity="0.5"/>
+    <path d="M40 30 C50 40 60 50 65 60" stroke="#7A9068" stroke-width="1" opacity="0.4"/>
+    <path d="M40 45 C30 55 20 60 15 68" stroke="#7A9068" stroke-width="1" opacity="0.4"/>
+  </svg>
+
+  <svg class="leaf" style="width:65px;bottom:5%;right:12%;animation-duration:12s;animation-delay:2s;" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 5 C40 5 70 30 70 65 C70 95 55 115 40 115 C25 115 10 95 10 65 C10 30 40 5 40 5Z" fill="#3AACB8"/>
+    <path d="M40 5 L40 115" stroke="#2A7A84" stroke-width="1.5" opacity="0.5"/>
+  </svg>
+
+  <svg class="leaf" style="width:110px;top:10%;right:4%;animation-duration:14s;animation-delay:4s;" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 5 C40 5 70 30 70 65 C70 95 55 115 40 115 C25 115 10 95 10 65 C10 30 40 5 40 5Z" fill="#7A9068"/>
+    <path d="M40 5 L40 115" stroke="#4A5C3A" stroke-width="1.5" opacity="0.5"/>
+    <path d="M40 35 C52 48 62 55 68 62" stroke="#4A5C3A" stroke-width="1" opacity="0.35"/>
+    <path d="M40 55 C28 65 18 70 12 76" stroke="#4A5C3A" stroke-width="1" opacity="0.35"/>
+  </svg>
+
+  <svg class="leaf" style="width:55px;top:30%;left:2%;animation-duration:10s;animation-delay:6s;" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 5 C40 5 70 30 70 65 C70 95 55 115 40 115 C25 115 10 95 10 65 C10 30 40 5 40 5Z" fill="#C8A227"/>
+    <path d="M40 5 L40 115" stroke="#a88520" stroke-width="1.5" opacity="0.5"/>
+  </svg>
+
+  <svg class="leaf" style="width:80px;bottom:30%;right:3%;animation-duration:11s;animation-delay:1s;" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 5 C40 5 70 30 70 65 C70 95 55 115 40 115 C25 115 10 95 10 65 C10 30 40 5 40 5Z" fill="#4A5C3A"/>
+    <path d="M40 5 L40 115" stroke="#7A9068" stroke-width="1.5" opacity="0.5"/>
+    <path d="M40 40 C50 52 60 58 66 65" stroke="#7A9068" stroke-width="1" opacity="0.4"/>
+  </svg>
+  <div class="workshops-header reveal">
+    <span class="section-eyebrow">סדנאות</span>
+    <h2 class="section-title">תפקיד עמוק,<br><em>קבוצה אינטימית</em></h2>
+    <p class="workshops-sub">כל סדנה נבנית בקפידה — לצמיחה, לשחרור, לתנועה</p>
+  </div>
+  <div class="workshops-grid">
+    <div class="workshop-card reveal reveal-delay-1">
+      <div class="workshop-img">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=80&fit=crop" alt="ריפוי עצמי">
+        <div class="workshop-num">01</div>
+      </div>
+      <div class="workshop-body">
+        <span class="workshop-tag">ריפוי עצמי</span>
+        <h3 class="workshop-name">לחזור אליך</h3>
+        <p class="workshop-desc">מסע פנימי של חיבור מחדש לגוף ולקול הפנימי שלך</p>
+        <a href="#" class="workshop-link">לפרטים <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></a>
+      </div>
+    </div>
+    <div class="workshop-card reveal reveal-delay-2">
+      <div class="workshop-img">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80&fit=crop" alt="קבוצה">
+        <div class="workshop-num">02</div>
+      </div>
+      <div class="workshop-body">
+        <span class="workshop-tag">קבוצה ותמיכה</span>
+        <h3 class="workshop-name">אחוות אור</h3>
+        <p class="workshop-desc">עבודה קבוצתית עמוקה בתוך מרחב בטוח ומחזיק</p>
+        <a href="#" class="workshop-link">לפרטים <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></a>
+      </div>
+    </div>
+    <div class="workshop-card reveal reveal-delay-3">
+      <div class="workshop-img">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80&fit=crop" alt="גוף ונשמה">
+        <div class="workshop-num">03</div>
+      </div>
+      <div class="workshop-body">
+        <span class="workshop-tag">גוף ונשמה</span>
+        <h3 class="workshop-name">עונת מרוחב</h3>
+        <p class="workshop-desc">שילוב של תנועה, נשימה ומדיטציה לשחרור מתח</p>
+        <a href="#" class="workshop-link">לפרטים <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></a>
+      </div>
+    </div>
+    <div class="workshop-card reveal reveal-delay-4">
+      <div class="workshop-img">
+        <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&q=80&fit=crop" alt="טראומה ושחרור">
+        <div class="workshop-num">04</div>
+      </div>
+      <div class="workshop-body">
+        <span class="workshop-tag">טראומה ושחרור</span>
+        <h3 class="workshop-name">שדות פוסט טראומה</h3>
+        <p class="workshop-desc">כלים מעשיים להתמודדות עם טראומה ותהליכי ריפוי</p>
+        <a href="#" class="workshop-link">לפרטים <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section id="guides" class="guides">
+  <div class="guides-header reveal">
+    <span class="section-eyebrow">המנחים שלנו</span>
+    <h2 class="section-title">אנשים <em>שמחזיקים מרחב</em></h2>
+  </div>
+  <div class="guides-grid">
+    <div class="guide-card reveal reveal-delay-1">
+      <div class="guide-avatar">ל</div>
+      <h3 class="guide-name">לוסה אזולאי</h3>
+      <p class="guide-role">מנחת קבוצות</p>
+    </div>
+    <div class="guide-card reveal reveal-delay-2">
+      <div class="guide-avatar">א</div>
+      <h3 class="guide-name">אברהם ברור</h3>
+      <p class="guide-role">מטפל בגוף-נפש</p>
+    </div>
+    <div class="guide-card reveal reveal-delay-3">
+      <div class="guide-avatar">ק</div>
+      <h3 class="guide-name">קרין ז׳רז׳ס</h3>
+      <p class="guide-role">מנחת סדנאות נשימה</p>
+    </div>
+    <div class="guide-card reveal reveal-delay-4">
+      <div class="guide-avatar">י</div>
+      <h3 class="guide-name">יעל גולשטיין</h3>
+      <p class="guide-role">מומחית טראומה</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="contact-img">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=85&fit=crop" alt="נוף">
+    <div class="contact-img-overlay">
+      <p class="contact-quote">"לא צריך לעצור הכל<br>כדי להתחיל מחדש"</p>
+      <span class="contact-quote-author">— Bornanew</span>
+    </div>
+  </div>
+  <div class="contact-form-col reveal">
+    <span class="section-eyebrow">צור קשר</span>
+    <h2 class="form-title">השאירו פרטים<br><em>ונחזור אליכם</em></h2>
+    <p class="form-subtitle">ישמח לשמוע עליכם ולהתאים את החוויה המושלמת עבורכם</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">שם פרטי</label>
+        <input type="text" class="form-input" placeholder="שם">
+      </div>
+      <div class="form-group">
+        <label class="form-label">שם משפחה</label>
+        <input type="text" class="form-input" placeholder="משפחה">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">אימייל</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">טלפון</label>
+        <input type="tel" class="form-input" placeholder="050-0000000">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">הודעה</label>
+      <textarea class="form-textarea" placeholder="ספרו לנו מה אתם מחפשים..."></textarea>
+    </div>
+    <button class="form-submit">שלח הודעה</button>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+  <div class="contact-strip-item"><span>📍</span><span>ישראל, גליל עליון — מרכז ריפוי בטבע</span></div>
+  <div class="contact-strip-item"><span>✉️</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="066e636a6a69466469746867686371286569286f6a">[email&#160;protected]</a></span></div>
+  <div class="contact-strip-item"><span>📞</span><span>04-800-0000</span></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <ul class="footer-links">
+    <li><a href="#">נגישות</a></li>
+    <li><a href="#">פרטיות</a></li>
+    <li><a href="#">תנאים</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Bornanew. כל הזכויות שמורות</span>
+  <div class="footer-brand">
+    <span class="footer-brand-he">להתחיל מחדש</span>
+    <span class="footer-brand-en">Bornanew</span>
+  </div>
+</footer>
+
+<script>
+  // הפעל את כל האלמנטים מיד בטעינה
+  function activateReveals() {
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(el => el.classList.add('visible'));
+  }
+
+  // הפעל מיד
+  activateReveals();
+
+  // גם אחרי שה-DOM מוכן לחלוטין
+  document.addEventListener('DOMContentLoaded', activateReveals);
+  window.addEventListener('load', activateReveals);
+
+  // אנימציית עלים parallax בגלילה
+  const workshopsSection = document.getElementById('workshops');
+  const leaves = document.querySelectorAll('.leaf');
+
+  window.addEventListener('scroll', () => {
+    if (!workshopsSection) return;
+    const rect = workshopsSection.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!inView) return;
+
+    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    leaves.forEach((leaf, i) => {
+      const speed = 0.08 + (i * 0.04);
+      const drift  = (i % 2 === 0) ? 1 : -1;
+      leaf.style.transform = `translateY(${-progress * 80 * speed * 10}px) rotate(${progress * 15 * drift + i * 8}deg)`;
+      leaf.style.opacity = Math.min(0.11, progress * 0.18);
+    });
+  });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.padding = window.innerWidth > 768 ? '0.7rem 4rem' : '0.7rem 1.5rem';
+      nav.style.boxShadow = '0 4px 30px rgba(28,32,24,0.08)';
+    } else {
+      nav.style.padding = window.innerWidth > 768 ? '1.2rem 4rem' : '0.9rem 1.5rem';
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
