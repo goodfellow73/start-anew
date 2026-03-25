@@ -32,6 +32,7 @@
     font-family: 'Assistant', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
+    font-size: 18px;
   }
 
   body::before {
@@ -329,7 +330,7 @@
   }
 
   .about-text {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 2;
     color: var(--bark);
     margin-bottom: 1.5rem;
@@ -467,9 +468,9 @@
 
   .workshop-img-icon { font-size: 3rem; font-style: italic; font-weight: 200; color: rgba(245,239,228,0.3); }
   .workshop-body { padding: 1.8rem 1.6rem; }
-  .workshop-tag { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--logo-gold); margin-bottom: 0.8rem; display: block; }
-  .workshop-name { font-size: 1.3rem; font-weight: 300; color: var(--cream); margin-bottom: 0.8rem; line-height: 1.3; }
-  .workshop-desc { font-size: 0.8rem; color: var(--sand); line-height: 1.8; margin-bottom: 1.5rem; }
+  .workshop-tag { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--logo-gold); margin-bottom: 0.8rem; display: block; }
+  .workshop-name { font-size: 1.4rem; font-weight: 300; color: var(--cream); margin-bottom: 0.8rem; line-height: 1.3; }
+  .workshop-desc { font-size: 0.95rem; color: var(--sand); line-height: 1.8; margin-bottom: 1.5rem; }
 
   .workshop-link {
     font-size: 0.7rem;
@@ -531,8 +532,8 @@
   .guide-card:nth-child(3) .guide-img-placeholder { background: linear-gradient(145deg, var(--bark), var(--earth)); }
   .guide-card:nth-child(4) .guide-img-placeholder { background: linear-gradient(145deg, var(--clay), var(--bark)); }
 
-  .guide-name { font-size: 1.3rem; font-weight: 300; color: var(--earth); margin-bottom: 0.3rem; }
-  .guide-role { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--logo-teal); }
+  .guide-name { font-size: 1.4rem; font-weight: 300; color: var(--earth); margin-bottom: 0.3rem; }
+  .guide-role { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--logo-teal); }
 
   /* CONTACT */
   .contact {
@@ -560,8 +561,8 @@
     font-size: 0.85rem;
   }
 
-  .contact-item-text { font-size: 0.85rem; color: var(--bark); line-height: 1.7; }
-  .contact-item-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.1rem; }
+  .contact-item-text { font-size: 1rem; color: var(--bark); line-height: 1.7; }
+  .contact-item-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.1rem; }
   .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
   .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
   .form-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
@@ -672,18 +673,18 @@
   @media (max-width: 768px) {
     nav { padding: 0.9rem 1.5rem; flex-wrap: wrap; gap: 0.6rem; }
     .nav-links { order: 3; width: 100%; gap: 1rem; flex-wrap: wrap; justify-content: center; padding: 0.6rem 0 0.2rem; border-top: 1px solid rgba(196,168,130,0.2); }
-    .nav-links a { font-size: 0.7rem; }
-    .nav-cta { font-size: 0.7rem; padding: 0.5rem 1rem; }
+    .nav-links a { font-size: 0.85rem; }
+    .nav-cta { font-size: 0.8rem; padding: 0.5rem 1rem; }
     .nav-logo img { height: 30px; }
     .nav-logo span { font-size: 1rem; }
 
     .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-right { order: 1; height: 60vw; min-height: 240px; position: relative; }
+    .hero-right { order: 1; height: 75vw; min-height: 360px; position: relative; }
     .hero-img-wrap { position: absolute; inset: 0; }
     .hero-left { order: 2; padding: 3rem 1.5rem; }
-    .hero-text { max-width: 100%; }
+    .hero-text { max-width: 100%; font-size: 1.1rem; }
     .hero-scroll { display: none; }
-    .hero-title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
+    .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
 
     .about { grid-template-columns: 1fr; }
     .about-img { min-height: 240px; }
