@@ -52,38 +52,63 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.4rem 3rem;
-    background: rgba(250, 247, 242, 0.92);
+    flex-direction: row-reverse;
+    padding: 1rem 2.5rem;
+    background: rgba(247, 252, 251, 0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+    border-bottom: 1px solid rgba(58,172,184,0.15);
     transition: all 0.4s ease;
   }
 
-  .nav-logo {
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--earth);
-    text-decoration: none;
+  /* לוגו + שם המותג — צד ימין */
+  .nav-brand {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.9rem;
+    text-decoration: none;
   }
 
+  .nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+  }
+
+  .nav-brand-he {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--earth);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .nav-brand-en {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--logo-teal);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+
+  /* תפריט — צד שמאל */
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 2.2rem;
     list-style: none;
   }
 
   .nav-links a {
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
     color: var(--bark);
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: none;
     position: relative;
     transition: color 0.3s;
+    font-weight: 400;
   }
 
   .nav-links a::after {
@@ -385,8 +410,10 @@
     padding: 2.5rem;
   }
 
-  .space-name { font-size: 1.8rem; font-weight: 300; color: var(--cream); margin-bottom: 0.4rem; }
-  .space-desc { font-size: 0.8rem; color: rgba(245, 239, 228, 0.75); letter-spacing: 0.05em; }
+  .space-name { font-size: 1.8rem; font-weight: 300; color: var(--cream); margin-bottom: 0.6rem; }
+  .space-desc { font-size: 0.85rem; color: rgba(240, 250, 249, 0.85); letter-spacing: 0.02em; line-height: 1.7; }
+
+  .space-img-placeholder { height: 460px; }
 
   /* WORKSHOPS */
   .workshops {
@@ -702,17 +729,22 @@
 
 <!-- NAV -->
 <nav>
+  <a class="nav-cta" href="#contact">צור קשר</a>
   <ul class="nav-links">
     <li><a href="#about">הסיפור שלנו</a></li>
     <li><a href="#spaces">המרחבים</a></li>
     <li><a href="#workshops">סדנאות</a></li>
     <li><a href="#guides">המנחים</a></li>
   </ul>
-  <a class="nav-logo" href="#">
-    <img src="logo.png" alt="Heal & Renew" style="height:38px;width:auto;">
-    <span>Heal & Renew</span>
-  </a>
-  <a class="nav-cta" href="#contact">צור קשר</a>
+  <div class="nav-brand">
+    <a class="nav-logo" href="#">
+      <img src="logo.png" alt="Bornanew" style="height:56px;width:auto;">
+    </a>
+    <div class="nav-brand-text">
+      <span class="nav-brand-he">להתחיל מחדש</span>
+      <span class="nav-brand-en">Bornanew</span>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -748,8 +780,8 @@
   <div class="about-content reveal">
     <span class="section-tag">הסיפור שלנו</span>
     <h2 class="section-title">מקום שבו<br><em>הריפוי מתחיל</em></h2>
-    <p class="about-text">צוות של מטפלים שחברו מתוך אמונה משותפת — שריפוי אמיתי מתחיל בחיבור בין הגוף, הנפש והסביבה שבה אנחנו חיים.</p>
-    <p class="about-text">אנחנו מאמינים שכל אחד מסוגל להתחיל מחדש. הסדנאות, הכלים והמרחבים שאנחנו מציעים נבנו כדי לאפשר בדיוק את זה.</p>
+    <p class="about-text">מרחבי ריפוי והתחדשות ברחבי הגליל העליון אשר הוקם דווקא בעת המלחמה ובצפון הקסום. באמצעות מנחים ומנחות מקצועיים המתמחים בגוף ובנפש בצורות מגוונות בנינו מרכז המאפשר התבוננות פנימית מנותקת מהשגרה כדי לאפשר הנעה של תהליך פנימי.</p>
+    <p class="about-text">כולנו עברנו תקופה מאתגרת בלשון המעטה ועכשיו זו ההזדמנות ללמוד לצעוד בקצב חדש ללא כל פחד מהלא נודע. מומחי המרכז משתמשים בכלים מגוונים להבנה ותחזוקת הנפש, כלל האתרים מתאימים להתבוננות פנימית עמוקה, אנרגיות מרגיעות ואוויר נקי שמאפשר להאט, לנשום ולחזור אל עצמינו חזקים יותר.</p>
   </div>
 </section>
 
@@ -769,23 +801,23 @@
     <div class="space-card reveal reveal-delay-1">
       <div class="space-img-placeholder" style="background:none;position:relative;overflow:hidden;">
         <img src="michael-walk.jpg" 
-             alt="כלי מדיטציה עם נוף הרים" 
+             alt="מתחם רמות נפתלי" 
              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform 0.7s ease;">
       </div>
       <div class="space-overlay">
-        <h3 class="space-name">עמק התחלה</h3>
-        <p class="space-desc">מרחב טבעי לתהליכי שחרור ולימוד</p>
+        <h3 class="space-name">מתחם רמות נפתלי</h3>
+        <p class="space-desc">3.5 דונם של עצים ותיקים וסלעים טבעיים עם נישות ייחודיות לתהליכים פנימיים. חמש בקתות עץ זוגיות או משפחתיות, נעימות ומאובזרות — אנרגיות, שלווה, שקט ופרטיות שמרפאים את הנשמה.</p>
       </div>
     </div>
     <div class="space-card reveal reveal-delay-2">
       <div class="space-img-placeholder" style="background:none;position:relative;overflow:hidden;">
         <img src="justin-dream.jpg" 
-             alt="צמח צומח מעץ — התחדשות" 
+             alt="מתחם עמק החולה" 
              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform 0.7s ease;">
       </div>
       <div class="space-overlay">
-        <h3 class="space-name">רמות נפשי</h3>
-        <p class="space-desc">סביבה שקטה מיועדת לעבודה פנימית עמוקה</p>
+        <h3 class="space-name">מתחם עמק החולה</h3>
+        <p class="space-desc">3.5 דונם של חורשת אקליפטוס ותיקה, צמודה לנחל, עשירה בנוף עוצר נשימה. לינה בטבע, סככת אוכל, מטבחון — שקט וטבע המאפשר צמיחה מחודשת.</p>
       </div>
     </div>
   </div>
@@ -948,8 +980,11 @@
   </ul>
   <span class="footer-copy">© 2025 Heal & Renew. כל הזכויות שמורות</span>
   <span class="footer-logo">
-    <img src="logo.png" alt="Heal & Renew" style="height:28px;width:auto;filter:brightness(0) invert(0.7);">
-    <span>Heal & Renew</span>
+    <img src="logo.png" alt="Bornanew" style="height:28px;width:auto;filter:brightness(0) invert(0.7);">
+    <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;">
+      <span style="font-size:0.9rem;">להתחיל מחדש</span>
+      <span style="font-size:0.7rem;letter-spacing:0.15em;opacity:0.6;">Bornanew</span>
+    </span>
   </span>
 </footer>
 
